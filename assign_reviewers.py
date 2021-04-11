@@ -7,6 +7,7 @@
 import argparse
 import logging
 import logging.handlers
+import numpy as np
 import pandas as pd
 import sys
 
@@ -28,6 +29,15 @@ def get_parser():
     return parser
 
 
+def select_from_pool(list_reviewers, n_rev_total, n_rev_to_assign):
+    """Find reviewers who are least assigned"""
+    # TODO: add constraints based on affiliation
+    df_reviewers_flat = [item for sublist in list_reviewers for item in sublist]
+    # Get indices corresponding to reviewers who are least assigned
+    ind_rev = np.argsort(np.array([df_reviewers_flat.count(i) for i in range(n_rev_total)]))
+    return ind_rev.tolist()[:n_rev_to_assign]
+
+
 def main():
     # Get input params
     parser = get_parser()
@@ -40,7 +50,19 @@ def main():
     df = pd.read_csv(args.csv)
 
     # Generate a Panda DF per reviewer
-    raise NotImplementedError
+    list_reviewers = [[]] * 7
+    n_entries = df.shape[0]
+
+    # TODO: make it input args
+    n_reviewers = 5
+    reviewers_per_entry = 2
+
+    for i_entry in range(n_entries):
+        list_reviewers[i_entry] = select_from_pool(list_reviewers,
+                                                   n_rev_total=n_reviewers,
+                                                   n_rev_to_assign=reviewers_per_entry)
+
+    df['Reviewers'] = list_reviewers
 
 
 if __name__ == '__main__':
