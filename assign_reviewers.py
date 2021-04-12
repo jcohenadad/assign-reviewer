@@ -62,7 +62,15 @@ def main():
                                                    n_rev_total=n_reviewers,
                                                    n_rev_to_assign=reviewers_per_entry)
 
+    for i_reviewer in range(n_reviewers):
+        ind_rev = []
+        ind_rev = [ind_rev.append(i) for i in range(n_entries) if i_reviewer in list_reviewers[i]]
+        df_tmp = df.copy()
+        df_tmp.loc[ind_rev] = ''
+        df_tmp.to_csv(f'grading_form_{i_reviewer}.csv')
+
     df['Reviewers'] = list_reviewers
+    df.to_csv(f'grading_form.csv')
 
 
 if __name__ == '__main__':
