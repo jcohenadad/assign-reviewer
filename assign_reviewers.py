@@ -23,6 +23,8 @@ def get_parser():
     optional.add_argument("-h", "--help", action="help", help="Show this help message and exit")
     optional.add_argument("-c", "--csv",
                           help="CSV file following the format found in testing/form.csv")
+    optional.add_argument('-r', '--reviewer', nargs='?', action='append',
+                          help='Name of a reviewer. No space allowed.')
     optional.add_argument("-l", "--log-level",
                           default="INFO",
                           help="Logging level (eg. INFO, see Python logging docs)")
@@ -50,11 +52,12 @@ def main():
     df = pd.read_csv(args.csv)
 
     # Generate a Panda DF per reviewer
-    list_reviewers = [[]] * 7
     n_entries = df.shape[0]
+    list_reviewers = [[]] * n_entries
 
     # TODO: make it input args
-    n_reviewers = 5
+    reviewers = args.reviewer
+    n_reviewers = len(reviewers)
     reviewers_per_entry = 2
 
     for i_entry in range(n_entries):
@@ -63,11 +66,10 @@ def main():
                                                    n_rev_to_assign=reviewers_per_entry)
 
     for i_reviewer in range(n_reviewers):
-        ind_rev = []
-        ind_rev = [ind_rev.append(i) for i in range(n_entries) if i_reviewer in list_reviewers[i]]
+        ind_rev = [i for i in range(n_entries) if i_reviewer in list_reviewers[i]]
         df_tmp = df.copy()
         df_tmp.loc[ind_rev] = ''
-        df_tmp.to_csv(f'grading_form_{i_reviewer}.csv')
+        df_tmp.to_csv(f'grading_form_{reviewers[i_reviewer]}.csv')
 
     df['Reviewers'] = list_reviewers
     df.to_csv(f'grading_form.csv')
