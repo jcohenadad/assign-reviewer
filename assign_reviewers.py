@@ -69,6 +69,7 @@ def main():
         ind_rev = [i for i in range(n_entries) if i_reviewer in list_reviewers[i]]
         df_tmp = df.copy()
         df_tmp.loc[ind_rev] = ''
+        df_tmp['Rank'] = ''
         df_tmp.to_csv(f'grading_form_{reviewers[i_reviewer]}.csv')
 
     df['Reviewers'] = list_reviewers
