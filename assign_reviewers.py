@@ -63,7 +63,7 @@ def select_from_pool(list_reviewers, eligible_reviewers, n_rev_to_assign):
     df_reviewers_flat = [item for sublist in list_reviewers for item in sublist]
     # Get indices corresponding to reviewers who are least assigned
     ind_rev = np.argsort(np.array([df_reviewers_flat.count(i) for i in eligible_reviewers]))
-    return ind_rev.tolist()[:n_rev_to_assign]
+    return [eligible_reviewers[i] for i in ind_rev.tolist()][:n_rev_to_assign]
 
 
 def main():
