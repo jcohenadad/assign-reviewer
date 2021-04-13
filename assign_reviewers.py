@@ -52,17 +52,17 @@ def remove_same_affiliation(aff_entry, aff_reviewers):
     return eligible_reviewer
 
 
-def select_from_pool(list_reviewers, n_rev_total, n_rev_to_assign):
+def select_from_pool(list_reviewers, eligible_reviewers, n_rev_to_assign):
     """
     Find reviewers who are least assigned
-    :param list_reviewers:
-    :param n_rev_total:
-    :param n_rev_to_assign:
+    :param list_reviewers: list of string:
+    :param eligible_reviewers: list of int:
+    :param n_rev_to_assign: int:
     :return:
     """
     df_reviewers_flat = [item for sublist in list_reviewers for item in sublist]
     # Get indices corresponding to reviewers who are least assigned
-    ind_rev = np.argsort(np.array([df_reviewers_flat.count(i) for i in range(n_rev_total)]))
+    ind_rev = np.argsort(np.array([df_reviewers_flat.count(i) for i in eligible_reviewers]))
     return ind_rev.tolist()[:n_rev_to_assign]
 
 
@@ -81,17 +81,23 @@ def main():
     n_entries = df.shape[0]
     list_reviewers = [[]] * n_entries
 
-    # TODO: make it input args
     reviewers = args.reviewer
     n_reviewers = len(reviewers)
     reviewers_per_entry = args.number_reviewers
 
+    # Make sure number of affiliations match number of reviewers
+    if args.affiliation is None:
+        # If no affiliation given, use all reviewers.
+        eligible_reviewers = list(range(n_reviewers))
+    elif not len(args.affiliation) == n_reviewers:
+        raise RuntimeError("The number of affiliations should match the number of reviewers. Exit.")
+
     for i_entry in range(n_entries):
-        eligible_reviewers = remove_same_affiliation(df.loc[i_entry]['Affiliation'], args.affiliation)
+        if args.affiliation is not None:
+            eligible_reviewers = remove_same_affiliation(df.loc[i_entry]['Affiliation'], args.affiliation)
         list_reviewers[i_entry] = select_from_pool(list_reviewers,
-                                                   n_rev_total=n_reviewers,
-                                                   n_rev_to_assign=reviewers_per_entry,
-                                                   affiliations=args.affiliation)
+                                                   eligible_reviewers=eligible_reviewers,
+                                                   n_rev_to_assign=reviewers_per_entry)
 
     for i_reviewer in range(n_reviewers):
         ind_rev = [i for i in range(n_entries) if i_reviewer in list_reviewers[i]]
