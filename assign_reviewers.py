@@ -9,6 +9,7 @@ import logging
 import logging.handlers
 import numpy as np
 import pandas as pd
+import pkg_resources
 import sys
 
 logger = logging.getLogger(__name__)
@@ -16,20 +17,22 @@ logger = logging.getLogger(__name__)
 
 def get_parser():
     parser = argparse.ArgumentParser(
+        prog='assign-reviewers',
         description="Assign reviewers and create scoring excel sheets. The input is a CSV file formatted"
                     " as in testing/form.csv. This CSV can be exported from Google form.",
         add_help=False)
-    optional = parser.add_argument_group('optional arguments')
-    optional.add_argument("-h", "--help", action="help", help="Show this help message and exit")
-    optional.add_argument("-c", "--csv",
-                          help="CSV file following the format found in testing/form.csv")
-    optional.add_argument('-r', '--reviewer', nargs='?', action='append',
-                          help='Name of a reviewer. No space allowed.')
-    optional.add_argument('-n', '--number-reviewers', type=int, default=2,
-                          help='Number of reviewers per entry to assign.')
-    optional.add_argument("-l", "--log-level",
-                          default="INFO",
-                          help="Logging level (eg. INFO, see Python logging docs)")
+    parser.add_argument('-h', '--help', action="help", help="Show this help message and exit")
+    parser.add_argument('-c', '--csv',
+                        help="CSV file following the format found in testing/form.csv")
+    parser.add_argument('-r', '--reviewer', nargs='?', action='append',
+                        help='Name of a reviewer. No space allowed.')
+    parser.add_argument('-n', '--number-reviewers', type=int, default=2,
+                        help='Number of reviewers per entry to assign.')
+    parser.add_argument('-v', '--version', action='version',
+                        version=pkg_resources.require('assign-reviewers')[0].version)
+    parser.add_argument('-l', '--log-level',
+                        default="INFO",
+                        help="Logging level (eg. INFO, see Python logging docs)")
     return parser
 
 
