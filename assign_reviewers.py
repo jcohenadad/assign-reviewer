@@ -16,10 +16,18 @@ logger = logging.getLogger(__name__)
 
 
 def get_parser():
+    example_text = '''examples:
+
+  assign-reviewers -c testing/form.csv -r Anna -r Elsa -r Christophe -r Sven -n 3
+  assign-reviewers -c form.csv -r Anna -a "Chiang Mai" -r Elsa -a UBC "British Columbia"
+    '''
+
     parser = argparse.ArgumentParser(
         prog='assign-reviewers',
         description="Assign reviewers and create scoring excel sheets. The input is a CSV file formatted"
                     " as in testing/form.csv. This CSV can be exported from Google form.",
+        epilog=example_text,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
         add_help=False)
     parser.add_argument('-h', '--help', action="help", help="Show this help message and exit")
     parser.add_argument('-c', '--csv',
@@ -27,7 +35,10 @@ def get_parser():
     parser.add_argument('-r', '--reviewer', nargs='?', action='append',
                         help='Name of a reviewer. No space allowed.')
     parser.add_argument('-a', '--affiliation', nargs='+', action='append',
-                        help='Affiliation(s) of the previously-listed reviewer. Separate with space.')
+                        help='Affiliation(s) of the previously-listed reviewer. If you decide to '
+                             'add affiliations, you need to add them for ALL reviewers. One reviewer can have multiple'
+                             'affiliations; if this is the case, separate them with space. If an affiliation has '
+                             'spaces in it, add double-quotes. Example: "University of Toronto"')
     parser.add_argument('-n', '--number-reviewers', type=int, default=2,
                         help='Number of reviewers per entry to assign.')
     parser.add_argument('-v', '--version', action='version',
@@ -35,6 +46,7 @@ def get_parser():
     parser.add_argument('-l', '--log-level',
                         default="INFO",
                         help="Logging level (eg. INFO, see Python logging docs)")
+ 
     return parser
 
 
