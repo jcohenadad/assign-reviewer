@@ -25,6 +25,8 @@ def get_parser():
                           help="CSV file following the format found in testing/form.csv")
     optional.add_argument('-r', '--reviewer', nargs='?', action='append',
                           help='Name of a reviewer. No space allowed.')
+    optional.add_argument('-n', '--number-reviewers', type=int, default=2,
+                          help='Number of reviewers per entry to assign.')
     optional.add_argument("-l", "--log-level",
                           default="INFO",
                           help="Logging level (eg. INFO, see Python logging docs)")
@@ -58,7 +60,7 @@ def main():
     # TODO: make it input args
     reviewers = args.reviewer
     n_reviewers = len(reviewers)
-    reviewers_per_entry = 2
+    reviewers_per_entry = args.number_reviewers
 
     for i_entry in range(n_entries):
         list_reviewers[i_entry] = select_from_pool(list_reviewers,
@@ -68,7 +70,7 @@ def main():
     for i_reviewer in range(n_reviewers):
         ind_rev = [i for i in range(n_entries) if i_reviewer in list_reviewers[i]]
         df_tmp = df.copy()
-        df_tmp.loc[ind_rev] = ''
+        df_tmp.loc[~df_tmp.index.isin(ind_rev)] = ''
         df_tmp['Rank'] = ''
         df_tmp.to_csv(f'grading_form_{reviewers[i_reviewer]}.csv')
 
