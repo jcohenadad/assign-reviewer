@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# MacOs
+.DS_Store
+
+# Output artefacts
+grading_form*
