@@ -10,8 +10,11 @@ from assign_reviewers import *
 
 def test_select_from_pool():
     list_reviewers = [[0, 1], [0, 2], [3], [], []]
-    reviewers = select_from_pool(list_reviewers, 4, 3)
+    reviewers = select_from_pool(list_reviewers, [0, 1, 2, 3], 3)
     assert reviewers == [1, 2, 3]
+    # Make reviewer 1 not illegible
+    reviewers = select_from_pool(list_reviewers, [0, 2, 3], 3)
+    assert reviewers == [2, 3, 0]
 
 
 def test_remove_same_affiliation():
