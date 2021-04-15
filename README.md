@@ -1,5 +1,7 @@
 [![test status](https://github.com/jcohenadad/assign-reviewers/workflows/test/badge.svg)](https://github.com/jcohenadad/assign-reviewers/actions/workflows/test.yml)
 
+[![publish pypi](https://github.com/jcohenadad/assign-reviewers/workflows/publish/badge.svg)](https://github.com/jcohenadad/assign-reviewers/actions/workflows/publish.yml)
+
 # assign-reviewers
 
 Very simple script to randomly assign reviewers and create scoring sheets.
