@@ -133,3 +133,6 @@ dmypy.json
 
 # Output artefacts
 grading_form*
+
+# Pycharm
+.idea
