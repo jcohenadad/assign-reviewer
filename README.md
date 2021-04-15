@@ -48,3 +48,8 @@ assign-reviewers -c form.csv -r Anna -a "Chiang Mai" -r Elsa -a UBC "British Col
 
 In this example, the reviewer **Elsa** has the affiliations {'UBC', 'British Columbia'}, and if these are found in the 
 affiliation of the submitter, then this reviewer will not be assigned.
+
+
+## Got any problem?
+
+Please [open an issue](https://github.com/jcohenadad/assign-reviewers/issues)
