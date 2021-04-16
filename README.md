@@ -33,7 +33,7 @@ This will generate four CSV files, each containing an additional column with the
 5. Each reviewer uploads the CSV on Google Sheet: **File > Import**, then click "Upload", drag & drop the CSV file, 
    and click "Import data". The listed submissions can then be graded/ranked as shown below:
    
-   ![Alt text](documentation/fig_tutorial_1.png?raw=true "Title")
+   ![Alt text](https://raw.githubusercontent.com/jcohenadad/assign-reviewers/main/documentation/fig_tutorial_1.png?raw=true "Title")
 
 6. Each reviewer shares their Google Sheet with you, and you can simply copy the reviewer column and append it to the
    main Google Sheet document. Then, a row-wise summation can easily be done.
