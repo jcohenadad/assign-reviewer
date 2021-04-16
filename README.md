@@ -26,7 +26,7 @@ CSV file](./testing/form.csv).
 assign-reviewers -c form.csv -r Anna -r Elsa -r Christophe -r Sven -n 2
 ````
 
-This will generate four CSV files, each containing an additional column with the name of the reviewer. 
+The command above will assign two reviewers per submission, among a pool of four reviewers. It will generate four CSV files, each containing an additional column with the name of the reviewer. 
 
 4. Send individual CSV file to the corresponding reviewer.
 
