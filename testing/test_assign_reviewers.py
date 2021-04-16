@@ -5,7 +5,7 @@ import os
 import sys
 import pytest
 
-from assign_reviewers import *
+from assign_reviewers.assign_reviewers import *
 
 
 def test_select_from_pool():
