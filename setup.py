@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='assign-reviewers',
-    version='0.1.4',
+    version='0.2',
     author='Julien Cohen-Adad',
     author_email='jcohen@polymtl.ca',
     packages=find_packages(),
@@ -13,7 +13,7 @@ setup(
     # install_requires=requirements,
     entry_points={
         'console_scripts': [
-            'assign-reviewers = assign_reviewers:main',
+            'assign-reviewers = assign_reviewers.assign_reviewers:main',
             ]
         },
     install_requires=[
