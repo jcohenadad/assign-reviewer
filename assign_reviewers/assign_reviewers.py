@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-# Very simple script that randomly assign reviewers and create scoring excel sheets.
+# Very simple script that randomly assigns reviewers and creates scoring excel sheets.
 #
 # Author: Julien Cohen-Adad
 
